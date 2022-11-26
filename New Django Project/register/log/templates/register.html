@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registeration</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins',sans-serif;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background:#03a9f4;
+            transition: 0.5s;
+        }
+
+        body.active{
+            background: #f43648;
+        }
+        .container{
+            position: relative;
+            width: 800px;
+            height: 500px;
+            margin: 20px;
+
+        }
+        .bluebg{
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            height: 420px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 5px 45px rgba(0,0,0,0.15);
+        }
+        .bluebg .box{
+            position: relative;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .bluebg .box h2{
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .bluebg .box button{
+            cursor: pointer;
+            padding: 10px 20px;
+            background: #fff;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+        }
+        .formbx{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: #fff;
+            z-index: 1000;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 45px rgba(0,0,0,0.25);
+            transition: 0.3s ease-in-out;
+            overflow: hidden;
+        }
+        .formbx.active{
+            left: 50%;
+        }
+
+        .formbx .form{
+            position: absolute;
+            left: 0;
+            width: 100%;
+            padding: 50px;
+            transition: 0.5s;
+        }
+
+        .formbx .signinform{
+            transition-delay: 0.25s;
+        }
+
+        .formbx.active .signinform{
+            left: -100%;
+            transition-delay: 0s;
+        }
+        .formbx .signupform{
+            left: 100%;
+            transition-delay: 0s;
+        }
+
+        .formbx.active .signupform{
+            left: 0;
+            transition-delay: 0.25s;
+        }
+
+        .formbx .form form{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .formbx .form form h3{
+            font-size: 1.5em;
+            color: #333033;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .formbx .form form input{
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            outline: none;
+            font-size: 16px;
+            border: 1px solid #333;
+        }
+        .formbx .form form input[type="submit"]{
+            background: #03a9f4;
+            border: none;
+            color: #fff;
+            max-width: 100px;
+            cursor: pointer;
+        }
+
+        .formbx.active .signupform input[type="submit"]{
+            background: #f43648;
+        }
+
+        .formbx .form form .forgot{
+            color: #333;
+            text-decoration: none;
+        }
+
+        @media(max-width:991px){
+            .container{
+                max-width: 400px;
+                height: 650px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .container .bluebg{
+                top: 0;
+                height: 100%; 
+            }
+            .formbx{
+                width: 100%;
+                height: 500px;
+                top: 0;
+                box-shadow: navajowhite;
+            }
+            .bluebg .box{
+                position: absolute;
+                width: 100%;
+                height: 150px;
+                bottom: 0;
+            }
+            .box.signin{
+                top: 0;
+            }
+            .formbx.active{
+                left: 0;
+                top: 150px;
+            }
+  }
+
+    </style>
+</head>
+<body>
+       <div> {% if messages %}
+        {% for message in messages%}
+        <p>{{message}}</p>
+        {%endfor%}
+        {% endif %}</div><hr>
+         
+     
+    <div class="container">
+        <div class="bluebg">
+            <div class="box signin">
+                <h2>Already Have an Account?</h2>
+                <button class="signinbtn">Sign in</button>
+            </div>
+            <div class="box signup">
+                <h2>Don't Have an Account?</h2>
+                <button class="signupbtn">Sign up</button>
+            </div>
+        </div>
+        <div class="formbx">
+            <div class="form signinform">
+                <form action="" method="POST">
+                    <h3>Sign In</h3>
+                    {%csrf_token%}
+                    <input type="text" placeholder="Username" name="uname">
+                    <input type="password" placeholder="Password" name="pword">
+                    <input type="Submit" value="Login"  name="signin">
+                    <a href="{% url 'password_reset'%}" class="forgot">Forgot Password</a> 
+                </form>
+            </div>
+
+            <div class="form signupform">
+                <form action="" method="POST">
+                    <h3>Sign Up</h3>
+                    {%csrf_token%}
+                    <input type="text" placeholder="Username" name="username">
+                    <input type="text" placeholder="Email" name="email">
+                    <input type="password" placeholder="Password" name="password1">
+                    <input type="password" placeholder="Confirm Password" name="password2">
+                    <input type="submit" value="Register" name="signup"> 
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const signinbtn=document.querySelector('.signinbtn');
+        const signupbtn=document.querySelector('.signupbtn');
+        const formbx=document.querySelector('.formbx')
+        const body=document.querySelector('body')
+
+        signupbtn.onclick=function(){
+            formbx.classList.add('active')
+            body.classList.add('active')
+        }
+        signinbtn.onclick=function(){
+            formbx.classList.remove('active')
+            body.classList.remove('active')
+        }
+    </script>
+</body>
+</html>
